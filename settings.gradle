@@ -1,0 +1,2 @@
+rootProject.name='TxTr'
+include ':app'

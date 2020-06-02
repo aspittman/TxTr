@@ -1,0 +1,8 @@
+<resources>
+<!--Menu Names-->
+    <string name="app_name">TxTr</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_statistics">Statistics</string>
+    <string name="menu_forum">Forum</string>
+
+</resources>
