@@ -28,8 +28,4 @@ class HomeFragment() : Fragment() {
         })
         return root
     }
-
-    companion object {
-        fun newInstance(): HomeFragment = HomeFragment()
-    }
 }

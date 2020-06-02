@@ -28,8 +28,4 @@ class StatisticsFragment() : Fragment() {
         })
         return root
     }
-
-    companion object {
-        fun newInstance(): StatisticsFragment = StatisticsFragment()
-    }
 }

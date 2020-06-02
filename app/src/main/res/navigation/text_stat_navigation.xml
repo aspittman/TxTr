@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/text_stat_navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.affinityapps.txtr.ui.home.HomeFragment"
+        android:label="Home Fragment"
+        tools:layout="@layout/home_fragment" />
+
+    <fragment
+        android:id="@+id/forumFragment"
+        android:name="com.affinityapps.txtr.ui.forum.ForumFragment"
+        android:label="Forum Fragment"
+        tools:layout="@layout/forum_fragment" />
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.affinityapps.txtr.ui.statistics.StatisticsFragment"
+        android:label="Statistics Fragment"
+        tools:layout="@layout/statistics_fragment" />
+</navigation>

@@ -27,8 +27,4 @@ class ForumFragment() : Fragment() {
         })
         return root
     }
-
-    companion object {
-        fun newInstance(): ForumFragment = ForumFragment()
-    }
 }

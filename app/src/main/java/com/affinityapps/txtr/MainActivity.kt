@@ -18,47 +18,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var toolbar: ActionBar
-
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                toolbar.title = "Home"
-                val homeFragment = HomeFragment.newInstance()
-                openFragment(homeFragment)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_forum -> {
-                toolbar.title = "Forum"
-                val forumFragment = ForumFragment.newInstance()
-                openFragment(forumFragment)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_statistics -> {
-                toolbar.title = "Statistics"
-                val statisticsFragment = StatisticsFragment.newInstance()
-                openFragment(statisticsFragment)
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
-
-    private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        toolbar = supportActionBar!!
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        val navController = findNavController(R.id.nav_host_fragment)
+
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.homeFragment, R.id.forumFragment, R.id.statisticsFragment))
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
     }
 
