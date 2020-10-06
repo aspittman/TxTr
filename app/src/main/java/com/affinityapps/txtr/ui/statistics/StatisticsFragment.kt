@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.affinityapps.txtr.R
-import com.affinityapps.txtr.ui.forum.ForumFragment
 
 class StatisticsFragment() : Fragment() {
 
@@ -21,7 +20,7 @@ class StatisticsFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         statisticsViewModel = ViewModelProvider(this).get(StatisticsViewModel::class.java)
-        val root = inflater.inflate(R.layout.statistics_fragment, container, false)
+        val root = inflater.inflate(R.layout.fragment_statistics, container, false)
         val textView:TextView = root.findViewById(R.id.statistics_test)
         statisticsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it

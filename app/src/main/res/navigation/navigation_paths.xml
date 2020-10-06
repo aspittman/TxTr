@@ -2,23 +2,24 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/text_stat_navigation"
-    app:startDestination="@id/homeFragment">
+    android:id="@+id/navigation_paths"
+    app:startDestination="@id/fragment_home">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/fragment_home"
         android:name="com.affinityapps.txtr.ui.home.HomeFragment"
         android:label="Home Fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/forumFragment"
-        android:name="com.affinityapps.txtr.ui.forum.ForumFragment"
-        android:label="Forum Fragment"
-        tools:layout="@layout/forum_fragment" />
-    <fragment
-        android:id="@+id/statisticsFragment"
+        android:id="@+id/fragment_statistics"
         android:name="com.affinityapps.txtr.ui.statistics.StatisticsFragment"
         android:label="Statistics Fragment"
-        tools:layout="@layout/statistics_fragment" />
+        tools:layout="@layout/fragment_statistics" />
+
+    <fragment
+        android:id="@+id/fragment_forum"
+        android:name="com.affinityapps.txtr.ui.forum.ForumFragment"
+        android:label="Forum Fragment"
+        tools:layout="@layout/fragment_forum" />
 </navigation>

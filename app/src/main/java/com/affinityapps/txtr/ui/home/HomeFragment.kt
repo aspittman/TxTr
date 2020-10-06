@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.affinityapps.txtr.R
-import com.affinityapps.txtr.ui.forum.ForumFragment
 
 class HomeFragment() : Fragment() {
 
@@ -21,7 +20,7 @@ class HomeFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.home_fragment, container, false)
+        val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView:TextView = root.findViewById(R.id.home_test)
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it

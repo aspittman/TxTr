@@ -20,7 +20,7 @@ class ForumFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         forumViewModel = ViewModelProvider(this).get(ForumViewModel::class.java)
-        val root = inflater.inflate(R.layout.forum_fragment, container, false)
+        val root = inflater.inflate(R.layout.fragment_forum, container, false)
         val textView:TextView = root.findViewById(R.id.forum_test)
         forumViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
