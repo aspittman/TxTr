@@ -5,6 +5,11 @@
     <string name="menu_statistics">Statistics</string>
     <string name="menu_forum">Forum</string>
 
+    <!--Graph Labels-->
+    <string name="tab_day">Day</string>
+    <string name="tab_week">Week</string>
+    <string name="tab_month">Month</string>
+
     <!--Navigation Drawer-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
