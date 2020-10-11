@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.affinityapps.txtr.databinding.FragmentHomeBinding
+import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment() : Fragment() {
 
@@ -26,6 +27,12 @@ class HomeFragment() : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        val fab: View = binding.fab
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
+        }
         homeFragmentArrayList = ArrayList()
         homeFragmentArrayList.add(Contact("Test", "Test", 1))
         homeFragmentArrayList.add(Contact("Test", "Test", 2))
