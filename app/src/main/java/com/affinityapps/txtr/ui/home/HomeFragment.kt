@@ -1,6 +1,7 @@
 package com.affinityapps.txtr.ui.home
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,6 @@ class HomeFragment() : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var homeFragmentArrayList: ArrayList<Contact>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,13 +27,25 @@ class HomeFragment() : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        homeFragmentArrayList = ArrayList()
-        homeFragmentArrayList.add(Contact("Test", "Test", 1))
-        homeFragmentArrayList.add(Contact("Test", "Test", 2))
-        homeFragmentArrayList.add(Contact("Test", "Test", 3))
+        val contactList : MutableList<Contact> = ArrayList()
+        val contacts = activity?.contentResolver?.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
+        if (contacts != null) {
+            while (contacts.moveToNext()) {
+                val name =
+                    contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                val number =
+                    contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                val obj = Contact()
+                obj.name = name
+                obj.number = number
+
+                contactList.add(obj)
+            }
+            contacts.close()
+        }
 
         viewManager = LinearLayoutManager(activity)
-        homeAdapter = HomeAdapter(homeFragmentArrayList)
+        homeAdapter = HomeAdapter(contactList)
 
         recyclerView = binding.homeFragmentRecyclerview.apply {
             setHasFixedSize(true)

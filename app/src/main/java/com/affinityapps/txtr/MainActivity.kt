@@ -9,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -31,17 +32,11 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M
-        ) {
-            if (checkPermission(permissions)) {
-                Toast.makeText(this, "Permission is already provided", Toast.LENGTH_SHORT).show()
-            } else {
-                requestPermissions(permissions, PERMISSION_REQUEST)
-            }
-        } else {
-            Toast.makeText(this, "Permission is already provided", Toast.LENGTH_SHORT).show()
-        }
+        inputPermission()
+        enableNavigation()
+    }
 
+    private fun enableNavigation() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
@@ -65,11 +60,17 @@ class MainActivity : AppCompatActivity() {
 
         return when (item.itemId) {
             R.id.add_contacts -> {
-                //click to add
+
                 true
             }
             R.id.light_dark -> {
-                //light dark mode
+                val nightMode: Int = AppCompatDelegate.getDefaultNightMode()
+                if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+                recreate()
                 true
             }
             R.id.switch_language -> {
@@ -77,6 +78,19 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun inputPermission() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M
+        ) {
+            if (checkPermission(permissions)) {
+                Toast.makeText(this, "Permission is already provided", Toast.LENGTH_SHORT).show()
+            } else {
+                requestPermissions(permissions, PERMISSION_REQUEST)
+            }
+        } else {
+            Toast.makeText(this, "Permission is already provided", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -89,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         return allSuccess
     }
 
-    override fun onRequestPermissionsResult(
+    override fun onRequestPermissionsResult (
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray

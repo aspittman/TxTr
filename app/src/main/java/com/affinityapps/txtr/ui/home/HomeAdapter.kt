@@ -6,10 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.affinityapps.txtr.databinding.DataListItemsBinding
 
-private lateinit var homeFragmentArrayList: ArrayList<Contact>
-private lateinit var binding: DataListItemsBinding
-
-class HomeAdapter(private val homeFragmentArrayList: ArrayList<Contact>) :
+class HomeAdapter(private val homeFragmentArrayList: List<Contact>) :
     RecyclerView.Adapter<HomeAdapter.HomeFragmentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeFragmentViewHolder {
@@ -24,8 +21,7 @@ class HomeAdapter(private val homeFragmentArrayList: ArrayList<Contact>) :
 
         val contact: Contact = homeFragmentArrayList[position]
         holder.nameTextView.text = contact.name
-        holder.dateTextView.text = contact.date
-        holder.timeTextView.text = contact.time.toString()
+        holder.dateTextView.text = contact.number
     }
 
     override fun getItemCount() = homeFragmentArrayList.size
@@ -36,6 +32,6 @@ class HomeAdapter(private val homeFragmentArrayList: ArrayList<Contact>) :
 
         var nameTextView: TextView = binding.dataName
         var dateTextView: TextView = binding.dataDate
-        var timeTextView: TextView = binding.dataTime
+      //  var timeTextView: TextView = binding.dataTime
     }
 }

@@ -1,3 +1,10 @@
 package com.affinityapps.txtr.ui.home
 
-data class Contact(val name: String, val date: String, val time: Int)
+import android.graphics.Bitmap
+
+class Contact {
+
+    var name: String = ""
+    var number: String = ""
+    var image: Bitmap? = null
+}
