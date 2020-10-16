@@ -1,10 +1,10 @@
-package com.affinityapps.txtr.ui.forum
+package com.affinityapps.txtr.ui.summary
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ForumViewModel() : ViewModel() {
+class SummaryViewModel() : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is a forum fragment test"

@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/fragment_forum"
-        android:name="com.affinityapps.txtr.ui.forum.ForumFragment"
+        android:name="com.affinityapps.txtr.ui.summary.SummaryFragment"
         android:label="Forum Fragment"
         tools:layout="@layout/fragment_forum" />
 </navigation>

@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/add_contacts"
-        android:icon="@drawable/ic_add"
+        android:id="@+id/add_permissions"
+        android:icon="@drawable/ic_admin"
         android:title="@string/menu_home"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/refresh_home"
+        android:icon="@drawable/ic_refresh"
+        android:title="@string/menu_statistics"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/light_dark"
         android:icon="@drawable/ic_brightness"
-        android:title="@string/menu_statistics"
-        app:showAsAction="ifRoom"/>
-
-    <item
-        android:id="@+id/switch_language"
-        android:icon="@drawable/ic_translate"
         android:title="@string/menu_forum"
         app:showAsAction="ifRoom"/>
 </menu>

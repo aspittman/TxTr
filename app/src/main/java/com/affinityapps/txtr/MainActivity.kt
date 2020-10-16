@@ -10,6 +10,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,6 +19,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.affinityapps.txtr.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 private const val PERMISSION_REQUEST = 10
 
@@ -32,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        inputPermission()
         enableNavigation()
     }
 
@@ -59,22 +61,16 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
-            R.id.add_contacts -> {
-
+            R.id.add_permissions -> {
+                inputPermission()
+                true
+            }
+            R.id.refresh_home -> {
+                refreshHomeFragment()
                 true
             }
             R.id.light_dark -> {
-                val nightMode: Int = AppCompatDelegate.getDefaultNightMode()
-                if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                }
-                recreate()
-                true
-            }
-            R.id.switch_language -> {
-                //translate options
+                darkLightMode()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -94,6 +90,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun refreshHomeFragment() {
+        var frg: Fragment? = null
+        frg = supportFragmentManager.findFragmentByTag("HomeFragment")
+        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+        if (frg != null) {
+            ft.detach(frg)
+            ft.attach(frg)
+        }
+        ft.commit()
+    }
+
+    private fun darkLightMode() {
+        val nightMode: Int = AppCompatDelegate.getDefaultNightMode()
+        if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+        recreate()
+    }
+
     private fun checkPermission(permissionArray: Array<String>): Boolean {
         var allSuccess = true
         for (i in permissionArray.indices) {
@@ -103,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         return allSuccess
     }
 
-    override fun onRequestPermissionsResult (
+    override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
