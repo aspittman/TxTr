@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -18,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.affinityapps.txtr.databinding.ActivityMainBinding
+import com.affinityapps.txtr.ui.home.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -91,13 +91,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshHomeFragment() {
-        var frg: Fragment? = null
-        frg = supportFragmentManager.findFragmentByTag("HomeFragment")
+        val frg: HomeFragment =
+            supportFragmentManager.findFragmentByTag("HomeFragment") as HomeFragment
         val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-        if (frg != null) {
-            ft.detach(frg)
-            ft.attach(frg)
-        }
+        ft.detach(frg)
+        ft.attach(frg)
         ft.commit()
     }
 
