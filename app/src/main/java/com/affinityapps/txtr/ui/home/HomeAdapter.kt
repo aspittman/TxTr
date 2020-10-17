@@ -9,11 +9,16 @@ import com.affinityapps.txtr.databinding.DataListItemsBinding
 
 class HomeAdapter(
     private val homeFragmentArrayList: List<Contact>,
-    private val listener: OnHomeItemClickListener) :
+) :
     RecyclerView.Adapter<HomeAdapter.HomeFragmentViewHolder>() {
+    private lateinit var listener: OnHomeItemClickListener
 
     interface OnHomeItemClickListener {
         fun onHomeItemClick(position: Int)
+    }
+
+    fun setOnHomeItemClickListener(listener: OnHomeItemClickListener) {
+        this.listener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeFragmentViewHolder {

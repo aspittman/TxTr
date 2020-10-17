@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.affinityapps.txtr.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
 
-class HomeFragment() : Fragment(), HomeAdapter.OnHomeItemClickListener {
+class HomeFragment() : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -44,23 +44,26 @@ class HomeFragment() : Fragment(), HomeAdapter.OnHomeItemClickListener {
             contacts.close()
         }
 
-        viewManager = LinearLayoutManager(activity)
-        homeAdapter = HomeAdapter(contactList, this)
-
         recyclerView = binding.homeFragmentRecyclerview.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = homeAdapter
         }
+
+        viewManager = LinearLayoutManager(activity)
+        homeAdapter = HomeAdapter(contactList)
+        homeAdapter.setOnHomeItemClickListener(object: HomeAdapter.OnHomeItemClickListener {
+            override fun onHomeItemClick(position: Int) {
+
+            }
+
+        })
+
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onHomeItemClick(position: Int) {
-
     }
 }
