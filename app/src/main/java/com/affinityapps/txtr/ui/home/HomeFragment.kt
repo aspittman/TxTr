@@ -20,12 +20,11 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var dataFragmentTransfer: DataFragmentTransfer
+    private var dataFragmentTransfer: DataFragmentTransfer? = null
 
     interface DataFragmentTransfer {
         fun dataListInputSent(
-            id: String?, documentTitle: String?, organization: String?, project: String?,
-            date: String?, hours: String?, miles: String?, purchases: String?
+            date: String?, time: String?, message: String?
         )
     }
 
@@ -43,8 +42,8 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val contactsList: MutableList<Contacts> = ArrayList()
-        val smsDataList: MutableList<Contacts> = ArrayList()
+        val contactsList: MutableList<ContactsData> = ArrayList()
+        val smsDataList: MutableList<ContactsData> = ArrayList()
         val contacts = activity?.contentResolver?.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
             null,
@@ -59,14 +58,20 @@ class HomeFragment : Fragment() {
                     contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
                 val number =
                     contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                val contactsObject = Contacts()
-                contactsObject.name = name
-                contactsObject.number = number
-
+                val contactsObject = ContactsData(name, number)
                 contactsList.add(contactsObject)
+
+//                val date = contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+//                val time = contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+//                val message = contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+//                val smsDataObject = ContactsData(date, time, message)
+//                smsDataList.add(smsDataObject)
             }
             contacts.close()
         }
+
+        viewManager = LinearLayoutManager(activity)
+        homeAdapter = HomeAdapter(contactsList)
 
         recyclerView = binding.homeFragmentRecyclerview.apply {
             setHasFixedSize(true)
@@ -74,23 +79,21 @@ class HomeFragment : Fragment() {
             adapter = homeAdapter
         }
 
-        viewManager = LinearLayoutManager(activity)
-        homeAdapter = HomeAdapter(contactsList)
-        homeAdapter.setOnHomeItemClickListener(object : HomeAdapter.OnHomeItemClickListener {
-
-            override fun onHomeItemClick(position: Int) {
-                var contacts: Contacts = contactsList[position]
-                //          dataFragmentTransfer.dataListInputSent() fill in data for other fragments
-            }
-
-        })
+//        homeAdapter.setOnHomeItemClickListener(object : HomeAdapter.OnHomeItemClickListener {
+//
+//            override fun onHomeItemClick(position: Int) {
+//                var contacts: ContactsData = contactsList[position]
+//                //          dataFragmentTransfer.dataListInputSent() fill in data for other fragments
+//            }
+//
+//        })
 
         return binding.root
     }
 
     override fun onDetach() {
         super.onDetach()
-        dataFragmentTransfer = null!!
+        dataFragmentTransfer = null
     }
 
     override fun onDestroyView() {

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.affinityapps.txtr.databinding.DataListItemsBinding
 
 class HomeAdapter(
-    private val homeFragmentArrayList: List<Contacts>,
+    private val homeFragmentArrayList: List<ContactsData>,
 ) :
     RecyclerView.Adapter<HomeAdapter.HomeFragmentViewHolder>() {
     private lateinit var listener: OnHomeItemClickListener
@@ -21,29 +21,11 @@ class HomeAdapter(
         this.listener = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeFragmentViewHolder {
-        return HomeFragmentViewHolder(
-            DataListItemsBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
-        )
-    }
-
-    override fun onBindViewHolder(holder: HomeFragmentViewHolder, position: Int) {
-
-        val contacts: Contacts = homeFragmentArrayList[position]
-        holder.nameTextView.text = contacts.name
-        holder.dateTextView.text = contacts.number
-    }
-
-    override fun getItemCount() = homeFragmentArrayList.size
-
-
     inner class HomeFragmentViewHolder(binding: DataListItemsBinding) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         var nameTextView: TextView = binding.dataName
-        var dateTextView: TextView = binding.dataDate
+        var numberTextView: TextView = binding.dataNumber
 
         init {
             itemView.setOnClickListener(this)
@@ -56,4 +38,21 @@ class HomeAdapter(
             }
         }
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeFragmentViewHolder {
+        return HomeFragmentViewHolder(
+            DataListItemsBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
+    }
+
+    override fun onBindViewHolder(holder: HomeFragmentViewHolder, position: Int) {
+
+        val contacts: ContactsData = homeFragmentArrayList[position]
+        holder.nameTextView.text = contacts.name
+        holder.numberTextView.text = contacts.number
+    }
+
+    override fun getItemCount() = homeFragmentArrayList.size
 }

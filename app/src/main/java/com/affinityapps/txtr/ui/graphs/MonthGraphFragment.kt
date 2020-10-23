@@ -1,4 +1,4 @@
-package com.affinityapps.txtr.ui.statistics
+package com.affinityapps.txtr.ui.graphs
 
 import android.graphics.Color
 import android.os.Bundle
@@ -7,16 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
-import com.affinityapps.txtr.databinding.FragmentWeekGraphBinding
+import com.affinityapps.txtr.databinding.FragmentMonthGraphBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 
-class WeekGraphFragment() : Fragment() {
+class MonthGraphFragment() : Fragment() {
 
-    private var _binding: FragmentWeekGraphBinding? = null
+    private var _binding: FragmentMonthGraphBinding? = null
     private val binding get() = _binding!!
 
     @Nullable
@@ -25,17 +25,17 @@ class WeekGraphFragment() : Fragment() {
         @Nullable container: ViewGroup?,
         @Nullable savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentWeekGraphBinding.inflate(inflater, container, false)
+        _binding = FragmentMonthGraphBinding.inflate(inflater, container, false)
         val root = binding.root
-        val barChart: BarChart = binding.weekBarChart
+        val barChart: BarChart = binding.monthBarChart
         val inputGraph: ArrayList<BarEntry> = ArrayList()
-        inputGraph.add(BarEntry(2000f, 565f))
-        inputGraph.add(BarEntry(2001f, 934f))
-        inputGraph.add(BarEntry(2002f, 443f))
-        inputGraph.add(BarEntry(2003f, 354f))
-        inputGraph.add(BarEntry(2004f, 635f))
-        inputGraph.add(BarEntry(2005f, 234f))
-        inputGraph.add(BarEntry(2006f, 367f))
+        inputGraph.add(BarEntry(2000f, 765f))
+        inputGraph.add(BarEntry(2001f, 234f))
+        inputGraph.add(BarEntry(2002f, 543f))
+        inputGraph.add(BarEntry(2003f, 654f))
+        inputGraph.add(BarEntry(2004f, 435f))
+        inputGraph.add(BarEntry(2005f, 634f))
+        inputGraph.add(BarEntry(2006f, 567f))
 
         val barDataSet = BarDataSet(inputGraph, "testData")
         barDataSet.setColors(*ColorTemplate.MATERIAL_COLORS)
@@ -45,7 +45,7 @@ class WeekGraphFragment() : Fragment() {
         val barData = BarData(barDataSet)
         barChart.setFitBars(true)
         barChart.data = barData
-        barChart.description.text = "Week Graph :D"
+        barChart.description.text = "Month Graph :D"
         barChart.animateY(2000)
 
         return root

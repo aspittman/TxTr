@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/fragment_statistics"
-        android:name="com.affinityapps.txtr.ui.statistics.StatisticsFragment"
+        android:name="com.affinityapps.txtr.ui.graphs.StatisticsFragment"
         android:label="Statistics Fragment"
         tools:layout="@layout/fragment_statistics" />
 
@@ -22,4 +22,10 @@
         android:name="com.affinityapps.txtr.ui.summary.SummaryFragment"
         android:label="Forum Fragment"
         tools:layout="@layout/fragment_forum" />
+
+    <fragment
+        android:id="@+id/fragment_messages"
+        android:name="com.affinityapps.txtr.ui.messages.MessagesFragment"
+        android:label="Messages Fragment"
+        tools:layout="@layout/fragment_messages" />
 </navigation>

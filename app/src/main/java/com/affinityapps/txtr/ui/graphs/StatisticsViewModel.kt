@@ -1,4 +1,4 @@
-package com.affinityapps.txtr.ui.statistics
+package com.affinityapps.txtr.ui.graphs
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

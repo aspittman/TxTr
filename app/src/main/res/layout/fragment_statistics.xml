@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context="ui.statistics.StatisticsFragment">
+    tools:context="ui.graphs.StatisticsFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
