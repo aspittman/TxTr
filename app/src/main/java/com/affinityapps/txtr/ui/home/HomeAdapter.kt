@@ -1,9 +1,11 @@
 package com.affinityapps.txtr.ui.home
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.affinityapps.txtr.databinding.DataListItemsBinding
 
@@ -12,6 +14,7 @@ class HomeAdapter(
 ) :
     RecyclerView.Adapter<HomeAdapter.HomeFragmentViewHolder>() {
     private lateinit var listener: OnHomeItemClickListener
+    private var rowIndex: Int = -1
 
     interface OnHomeItemClickListener {
         fun onHomeItemClick(position: Int)
@@ -24,6 +27,7 @@ class HomeAdapter(
     inner class HomeFragmentViewHolder(binding: DataListItemsBinding) :
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
+        var contactsLinearLayout: CardView = binding.contactsCardView
         var nameTextView: TextView = binding.dataName
         var numberTextView: TextView = binding.dataNumber
 
@@ -52,6 +56,21 @@ class HomeAdapter(
         val contacts: ContactsData = homeFragmentArrayList[position]
         holder.nameTextView.text = contacts.name
         holder.numberTextView.text = contacts.number
+
+        holder.contactsLinearLayout.setOnClickListener {
+            rowIndex = position
+            notifyDataSetChanged()
+        }
+
+        if (rowIndex == position) {
+            holder.contactsLinearLayout.setBackgroundColor(Color.parseColor("#03DAC5"))
+            holder.nameTextView.setTextColor(Color.parseColor("#ffffff"))
+            holder.numberTextView.setTextColor(Color.parseColor("#ffffff"))
+        } else {
+            holder.contactsLinearLayout.setBackgroundColor(Color.parseColor("#6200EE"))
+            holder.nameTextView.setTextColor(Color.parseColor("#ffffff"))
+            holder.numberTextView.setTextColor(Color.parseColor("#ffffff"))
+        }
     }
 
     override fun getItemCount() = homeFragmentArrayList.size
