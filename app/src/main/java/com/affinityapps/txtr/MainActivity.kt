@@ -2,6 +2,7 @@ package com.affinityapps.txtr
 
 import android.Manifest.permission.READ_CONTACTS
 import android.Manifest.permission.READ_SMS
+import android.R.id
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
@@ -17,17 +18,23 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.affinityapps.txtr.databinding.ActivityMainBinding
+import com.affinityapps.txtr.ui.graphs.StatisticsFragment
 import com.affinityapps.txtr.ui.home.HomeFragment
+import com.affinityapps.txtr.ui.summary.SummaryFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 private const val PERMISSION_REQUEST = 10
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HomeFragment.DataFragmentTransfer {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private var permissions = arrayOf(READ_CONTACTS, READ_SMS)
+
+    private val extraDate = "dataDate"
+    private val extraTime = "dataTime"
+    private val extraMessage = "dataMessage"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +44,28 @@ class MainActivity : AppCompatActivity() {
 
         inputPermission()
         enableNavigation()
+    }
+
+    override fun dataListInputSent(date: String?, time: String?, message: String?) {
+        val statisticsFragment = StatisticsFragment()
+        val summaryFragment = SummaryFragment()
+        val messagesFragment = StatisticsFragment()
+        val bundle = Bundle()
+        bundle.putString(extraDate, date)
+        bundle.putString(extraTime, time)
+        bundle.putString(extraMessage, message)
+
+        statisticsFragment.arguments = bundle
+//        supportFragmentManager.beginTransaction().replace(id.item_detail_container, statisticsFragment)
+//            .commit()
+
+        summaryFragment.arguments = bundle
+//        supportFragmentManager.beginTransaction().replace(id.item_detail_container, summaryFragment)
+//            .commit()
+
+        messagesFragment.arguments = bundle
+//        supportFragmentManager.beginTransaction().replace(id.item_detail_container, messagesFragment)
+//            .commit()
     }
 
     private fun enableNavigation() {

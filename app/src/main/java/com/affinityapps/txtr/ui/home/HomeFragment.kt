@@ -1,6 +1,7 @@
 package com.affinityapps.txtr.ui.home
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.LayoutInflater
@@ -42,8 +43,7 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        val contactsList: MutableList<ContactsData> = ArrayList()
-        val smsDataList: MutableList<ContactsData> = ArrayList()
+        val contactsDataList: MutableList<Contacts> = ArrayList()
         val contacts = activity?.contentResolver?.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
             null,
@@ -58,20 +58,34 @@ class HomeFragment : Fragment() {
                     contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
                 val number =
                     contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                val contactsObject = ContactsData(name, number)
-                contactsList.add(contactsObject)
-
-//                val date = contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-//                val time = contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
-//                val message = contacts.getString(contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
-//                val smsDataObject = ContactsData(date, time, message)
-//                smsDataList.add(smsDataObject)
+                val contactsObject = Contacts(name, number)
+                contactsDataList.add(contactsObject)
             }
             contacts.close()
         }
 
+        val smsDataList: MutableList<Messages> = ArrayList()
+        val messages = activity?.contentResolver?.query(
+            Uri.parse("content://sms/"),
+            null,
+            null,
+            null,
+            null
+        )
+
+        if (messages != null) {
+            while (messages.moveToNext()) {
+                val date = messages.getString(messages.getColumnIndex("date"))
+            //    val time = messages.getString(messages.getColumnIndex("time"))
+                val message = messages.getString(messages.getColumnIndex("body"))
+                val smsDataObject = Messages(date, "sdfgdf", message)
+                smsDataList.add(smsDataObject)
+            }
+            messages.close()
+        }
+
         viewManager = LinearLayoutManager(activity)
-        homeAdapter = HomeAdapter(contactsList)
+        homeAdapter = HomeAdapter(contactsDataList)
 
         recyclerView = binding.homeFragmentRecyclerview.apply {
             setHasFixedSize(true)
@@ -79,15 +93,13 @@ class HomeFragment : Fragment() {
             adapter = homeAdapter
         }
 
-//        homeAdapter.setOnHomeItemClickListener(object : HomeAdapter.OnHomeItemClickListener {
-//
-//            override fun onHomeItemClick(position: Int) {
-//                var contacts: ContactsData = contactsList[position]
-//                //          dataFragmentTransfer.dataListInputSent() fill in data for other fragments
-//            }
-//
-//        })
+        homeAdapter.setOnHomeItemClickListener(object : HomeAdapter.OnHomeItemClickListener {
 
+            override fun onHomeItemClick(position: Int) {
+                val smsData: Messages = smsDataList[position]
+                dataFragmentTransfer?.dataListInputSent(smsData.date, smsData.time, smsData.message)
+            }
+        })
         return binding.root
     }
 

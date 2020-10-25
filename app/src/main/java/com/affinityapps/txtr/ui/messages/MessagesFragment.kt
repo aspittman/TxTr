@@ -1,17 +1,13 @@
 package com.affinityapps.txtr.ui.messages
 
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.affinityapps.txtr.databinding.FragmentHomeBinding
 import com.affinityapps.txtr.databinding.FragmentMessagesBinding
-import com.affinityapps.txtr.ui.home.ContactsData
-import com.affinityapps.txtr.ui.home.HomeAdapter
 
 
 class MessagesFragment : Fragment() {
