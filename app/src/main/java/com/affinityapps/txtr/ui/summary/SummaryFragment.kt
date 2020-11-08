@@ -9,22 +9,30 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.affinityapps.txtr.R
+import com.affinityapps.txtr.databinding.FragmentMessagesBinding
+import com.affinityapps.txtr.databinding.FragmentSummaryBinding
 
 class SummaryFragment() : Fragment() {
 
-    private lateinit var summaryViewModel: SummaryViewModel
+    private var _binding: FragmentSummaryBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        summaryViewModel = ViewModelProvider(this).get(SummaryViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_forum, container, false)
-        val textView:TextView = root.findViewById(R.id.forum_test)
-        summaryViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        _binding = FragmentSummaryBinding.inflate(inflater, container, false)
+        //times texted today
+        //times texted in a week
+        //times texted in a month
+        //how many words used
+        //words used on average
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

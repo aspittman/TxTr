@@ -1,4 +1,4 @@
-package com.affinityapps.txtr
+package com.affinityapps.txtr.ui.main
 
 import android.Manifest.permission.READ_CONTACTS
 import android.Manifest.permission.READ_SMS
@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import com.affinityapps.txtr.R
 import com.affinityapps.txtr.databinding.ActivityMainBinding
 import com.affinityapps.txtr.ui.home.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView

@@ -1,17 +1,14 @@
 package com.affinityapps.txtr.ui.messages
 
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.affinityapps.txtr.databinding.FragmentHomeBinding
 import com.affinityapps.txtr.databinding.FragmentMessagesBinding
-import com.affinityapps.txtr.ui.home.ContactsData
-import com.affinityapps.txtr.ui.home.HomeAdapter
 
 
 class MessagesFragment : Fragment() {
@@ -30,9 +27,19 @@ class MessagesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMessagesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val dateTransfer = arguments?.let { MessagesFragmentArgs.fromBundle(it).DateMessages }
+        val messagesTransfer  = arguments?.let { MessagesFragmentArgs.fromBundle(it).MessageMessages }
+        Toast.makeText(context, "This is a pass test $dateTransfer and $messagesTransfer", Toast.LENGTH_LONG).show()
         val messagesList: MutableList<MessagesData> = ArrayList()
-        messagesList.add(MessagesData("aodjhfjd", "aijdbfhijadbsjf", "kajbfjkdsf"))
+        messagesList.add(MessagesData(dateTransfer.toString(), "aijdbfhijadbsjf",
+            messagesTransfer.toString()
+        ))
         messagesList.add(MessagesData("aodasdf", "aijdbfhijadbsjf", "kajbfjkdsf"))
         messagesList.add(MessagesData("aodjfdaas", "aijdbfhijadbsjf", "kajbfjkdsf"))
 
@@ -44,7 +51,6 @@ class MessagesFragment : Fragment() {
             layoutManager = viewManager
             adapter = messagesAdapter
         }
-        return binding.root
     }
 
     override fun onDestroyView() {

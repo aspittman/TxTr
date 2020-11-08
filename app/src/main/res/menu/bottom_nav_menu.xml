@@ -15,7 +15,7 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/fragment_forum"
+        android:id="@+id/fragment_summary"
         android:icon="@drawable/ic_forum"
         android:title="@string/menu_forum"
         app:showAsAction="ifRoom"/>
