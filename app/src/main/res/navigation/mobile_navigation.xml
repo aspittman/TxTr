@@ -9,65 +9,24 @@
         android:id="@+id/fragment_home"
         android:name="com.affinityapps.txtr.ui.home.HomeFragment"
         android:label="Home Fragment"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/date_statistics_transfer"
-            app:destination="@+id/fragment_statistics" />
-        <action
-            android:id="@+id/date_summary_transfer"
-            app:destination="@+id/fragment_summary" />
-        <action
-            android:id="@+id/date_messages_transfer"
-            app:destination="@+id/fragment_messages" />
-
-        <action
-            android:id="@+id/message_statistics_transfer"
-            app:destination="@+id/fragment_statistics" />
-        <action
-            android:id="@+id/message_summary_transfer"
-            app:destination="@+id/fragment_summary" />
-        <action
-            android:id="@+id/message_messages_transfer"
-            app:destination="@+id/fragment_messages" />
-    </fragment>
+        tools:layout="@layout/fragment_home"/>
 
     <fragment
         android:id="@+id/fragment_statistics"
         android:name="com.affinityapps.txtr.ui.graphs.StatisticsFragment"
         android:label="Statistics Fragment"
-        tools:layout="@layout/fragment_statistics">
-        <argument
-            android:name="DateStatistics"
-            app:argType="string" />
-        <argument
-            android:name="MessageStatistics"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/fragment_statistics"/>
 
     <fragment
         android:id="@+id/fragment_summary"
         android:name="com.affinityapps.txtr.ui.summary.SummaryFragment"
         android:label="Summary Fragment"
-        tools:layout="@layout/fragment_summary">
-        <argument
-            android:name="DateSummary"
-            app:argType="string" />
-        <argument
-            android:name="MessageSummary"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/fragment_summary"/>
 
     <fragment
         android:id="@+id/fragment_messages"
         android:name="com.affinityapps.txtr.ui.messages.MessagesFragment"
         android:label="Messages Fragment"
-        tools:layout="@layout/fragment_messages">
-        <argument
-            android:name="DateMessages"
-            app:argType="string" />
-        <argument
-            android:name="MessageMessages"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/fragment_messages"/>
 
 </navigation>

@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.affinityapps.txtr.databinding.MessageListItemsBinding
+import com.affinityapps.txtr.ui.home.Messages
 
 class MessagesAdapter(
-    private val messagesFragmentArrayList: List<MessagesData>,
+    private val messagesFragmentArrayList: List<Messages>,
 ) :
     RecyclerView.Adapter<MessagesAdapter.MessagesFragmentViewHolder>() {
 
@@ -35,7 +36,7 @@ class MessagesAdapter(
         holder: MessagesAdapter.MessagesFragmentViewHolder,
         position: Int
     ) {
-        val messages: MessagesData = messagesFragmentArrayList[position]
+        val messages: Messages = messagesFragmentArrayList[position]
         holder.dateTextView.text = messages.date
         holder.timeTextView.text = messages.time
         holder.messageTextView.text = messages.message

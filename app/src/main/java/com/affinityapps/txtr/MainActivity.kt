@@ -1,7 +1,6 @@
-package com.affinityapps.txtr.ui.main
+package com.affinityapps.txtr
 
-import android.Manifest.permission.READ_CONTACTS
-import android.Manifest.permission.READ_SMS
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
@@ -16,11 +15,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
-import com.affinityapps.txtr.R
 import com.affinityapps.txtr.databinding.ActivityMainBinding
 import com.affinityapps.txtr.ui.home.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
 
 private const val PERMISSION_REQUEST = 10
 
@@ -28,7 +25,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private var permissions = arrayOf(READ_CONTACTS, READ_SMS)
+    private var permissions = arrayOf(
+        Manifest.permission.READ_CONTACTS,
+        Manifest.permission.READ_SMS
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

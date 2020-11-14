@@ -1,6 +1,5 @@
 package com.affinityapps.txtr.ui.home
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -9,12 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.affinityapps.txtr.databinding.FragmentHomeBinding
-import com.affinityapps.txtr.ui.graphs.StatisticsFragment
-import com.affinityapps.txtr.ui.main.MainViewModel
 
 
 class HomeFragment : Fragment() {
@@ -91,24 +87,6 @@ class HomeFragment : Fragment() {
         homeAdapter.setOnHomeItemClickListener(object : HomeAdapter.OnHomeItemClickListener {
 
             override fun onHomeItemClick(position: Int) {
-                val messageLists = smsDataList[position]
-                val dataToStatistics = HomeFragmentDirections.dateStatisticsTransfer(
-                    messageLists.date,
-                    messageLists.message
-                )
-                val dataToSummary = HomeFragmentDirections.dateSummaryTransfer(
-                    messageLists.date,
-                    messageLists.message
-                )
-                val dataToMessages = HomeFragmentDirections.dateMessagesTransfer(
-                    messageLists.date,
-                    messageLists.message
-                )
-
-//                view.findNavController().navigate(dataToStatistics)
-//                view.findNavController().navigate(dataToSummary)
-                view.findNavController().navigate(dataToMessages)
-
                 Toast.makeText(requireActivity(), "button has been clicked", Toast.LENGTH_LONG).show()
             }
         })

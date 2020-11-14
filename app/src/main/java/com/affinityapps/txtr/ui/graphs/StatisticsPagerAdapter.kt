@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-private const val TAB_ITEM_SIZE = 3;
-private const val DAY = "hoursPosition";
-private const val WEEK = "milesPosition";
-private const val MONTH = "purchasesPosition";
+private const val TAB_ITEM_SIZE = 3
+private const val DAY = "hoursPosition"
+private const val WEEK = "milesPosition"
+private const val MONTH = "purchasesPosition"
 
 class StatisticsPagerAdapter(fragmentActivity : FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
@@ -27,14 +27,14 @@ class StatisticsPagerAdapter(fragmentActivity : FragmentActivity) : FragmentStat
             1 -> {
             fragment = WeekGraphFragment()
             args = Bundle()
-            args.putInt(WEEK, position + 1);
-            fragment.setArguments(args);
-            return fragment; }
+            args.putInt(WEEK, position + 1)
+            fragment.setArguments(args)
+            return fragment }
             else -> {
             fragment = MonthGraphFragment()
             args = Bundle()
-            args.putInt(MONTH, position + 1);
-            fragment.setArguments(args);
+            args.putInt(MONTH, position + 1)
+            fragment.setArguments(args)
             return fragment }
         }
     }

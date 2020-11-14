@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.affinityapps.txtr.databinding.FragmentMessagesBinding
+import com.affinityapps.txtr.ui.home.Messages
 
 
 class MessagesFragment : Fragment() {
@@ -33,15 +33,10 @@ class MessagesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val dateTransfer = arguments?.let { MessagesFragmentArgs.fromBundle(it).DateMessages }
-        val messagesTransfer  = arguments?.let { MessagesFragmentArgs.fromBundle(it).MessageMessages }
-        Toast.makeText(context, "This is a pass test $dateTransfer and $messagesTransfer", Toast.LENGTH_LONG).show()
-        val messagesList: MutableList<MessagesData> = ArrayList()
-        messagesList.add(MessagesData(dateTransfer.toString(), "aijdbfhijadbsjf",
-            messagesTransfer.toString()
-        ))
-        messagesList.add(MessagesData("aodasdf", "aijdbfhijadbsjf", "kajbfjkdsf"))
-        messagesList.add(MessagesData("aodjfdaas", "aijdbfhijadbsjf", "kajbfjkdsf"))
+        val messagesList: MutableList<Messages> = ArrayList()
+        messagesList.add(Messages("asobjdgksjd", "aijdbfhijadbsjf", "lskdfngldskfng"))
+        messagesList.add(Messages("aodasdf", "aijdbfhijadbsjf", "kajbfjkdsf"))
+        messagesList.add(Messages("aodjfdaas", "aijdbfhijadbsjf", "kajbfjkdsf"))
 
         viewManager = LinearLayoutManager(activity)
         messagesAdapter = MessagesAdapter(messagesList)
