@@ -14,10 +14,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.affinityapps.txtr.databinding.ActivityMainBinding
 import com.affinityapps.txtr.ui.home.HomeFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private const val PERMISSION_REQUEST = 10
 
@@ -44,8 +44,16 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        findViewById<BottomNavigationView>(R.id.nav_view)
-            .setupWithNavController(navController)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.fragment_home,
+                R.id.fragment_statistics,
+                R.id.fragment_summary,
+                R.id.fragment_messages
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.navView.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {

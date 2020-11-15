@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.affinityapps.txtr.databinding.FragmentHomeBinding
+import com.affinityapps.txtr.ui.graphs.HomeGraphViewModel
+import com.affinityapps.txtr.ui.messages.HomeMessagesViewModel
+import com.affinityapps.txtr.ui.summary.HomeSummaryViewModel
 
 
 class HomeFragment : Fragment() {
@@ -21,6 +24,10 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
+
+    private lateinit var graphViewModel: HomeGraphViewModel
+    private lateinit var messagesViewModel: HomeMessagesViewModel
+    private lateinit var summaryViewModel: HomeSummaryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,7 +94,8 @@ class HomeFragment : Fragment() {
         homeAdapter.setOnHomeItemClickListener(object : HomeAdapter.OnHomeItemClickListener {
 
             override fun onHomeItemClick(position: Int) {
-                Toast.makeText(requireActivity(), "button has been clicked", Toast.LENGTH_LONG).show()
+                val messageLists = smsDataList[position]
+                
             }
         })
     }
