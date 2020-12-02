@@ -5,18 +5,18 @@
     <item
         android:id="@+id/add_permissions"
         android:icon="@drawable/ic_admin"
-        android:title="@string/menu_home"
+        android:title="@string/toolbar_permissions"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/refresh_home"
         android:icon="@drawable/ic_refresh"
-        android:title="@string/menu_statistics"
+        android:title="@string/toolbar_refresh"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/light_dark"
         android:icon="@drawable/ic_brightness"
-        android:title="@string/menu_forum"
+        android:title="@string/toolbar_dark_mode"
         app:showAsAction="ifRoom"/>
 </menu>

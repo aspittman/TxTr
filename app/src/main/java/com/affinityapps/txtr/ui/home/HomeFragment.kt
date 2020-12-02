@@ -3,11 +3,13 @@ package com.affinityapps.txtr.ui.home
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.affinityapps.txtr.databinding.FragmentHomeBinding
@@ -33,7 +35,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -91,11 +93,15 @@ class HomeFragment : Fragment() {
             adapter = homeAdapter
         }
 
+        summaryViewModel = ViewModelProvider(requireActivity()).get(HomeSummaryViewModel::class.java)
         homeAdapter.setOnHomeItemClickListener(object : HomeAdapter.OnHomeItemClickListener {
 
             override fun onHomeItemClick(position: Int) {
                 val messageLists = smsDataList[position]
-                
+                summaryViewModel.messageText(messageLists.message)
+                summaryViewModel.messageTime(messageLists.time)
+                summaryViewModel.messageDate(messageLists.date)
+                Log.d("HomeClick", "Clicked and on position $position")
             }
         })
     }

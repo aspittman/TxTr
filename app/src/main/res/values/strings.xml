@@ -1,9 +1,16 @@
 <resources>
-<!--Menu Names-->
+    <!--Menu Names-->
     <string name="app_name">TxTr</string>
+
+    <!--Toolbar-->
+    <string name="toolbar_permissions">Permissions</string>
+    <string name="toolbar_refresh">Refresh</string>
+    <string name="toolbar_dark_mode">DarkMode</string>
+
+    <!--Bottom Navigation-->
     <string name="menu_home">Home</string>
     <string name="menu_statistics">Statistics</string>
-    <string name="menu_forum">Forum</string>
+    <string name="menu_summary">Summary</string>
     <string name="menu_messages">Messages</string>
 
     <!--Graph Labels-->
