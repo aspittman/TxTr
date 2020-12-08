@@ -1,13 +1,14 @@
 package com.affinityapps.txtr.ui.home
 
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.affinityapps.txtr.databinding.FragmentHomeBinding
 import com.affinityapps.txtr.ui.graphs.HomeGraphViewModel
 import com.affinityapps.txtr.ui.messages.HomeMessagesViewModel
 import com.affinityapps.txtr.ui.summary.HomeSummaryViewModel
+import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment() {
@@ -40,6 +42,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -75,10 +78,14 @@ class HomeFragment : Fragment() {
 
         if (messages != null) {
             while (messages.moveToNext()) {
-                val date = messages.getString(messages.getColumnIndex("date"))
-                //    val time = messages.getString(messages.getColumnIndex("time"))
                 val message = messages.getString(messages.getColumnIndex("body"))
-                val smsDataObject = Messages(date, "sdfgdf", message)
+                val time = messages.getString(messages.getColumnIndex("date"))
+//                val date = LocalDate.parse(time, DateTimeFormatter.ISO_DATE)
+//                val format = SimpleDateFormat("dd-MM-yyyy hh:mm:ss")
+//                val trueTime = format.format(date)
+
+
+                val smsDataObject = Messages(time, message, "aslkdjnflksadn")
                 smsDataList.add(smsDataObject)
             }
             messages.close()
@@ -93,14 +100,22 @@ class HomeFragment : Fragment() {
             adapter = homeAdapter
         }
 
+        graphViewModel = ViewModelProvider(requireActivity()).get(HomeGraphViewModel::class.java)
         summaryViewModel = ViewModelProvider(requireActivity()).get(HomeSummaryViewModel::class.java)
+        messagesViewModel = ViewModelProvider(requireActivity()).get(HomeMessagesViewModel::class.java)
         homeAdapter.setOnHomeItemClickListener(object : HomeAdapter.OnHomeItemClickListener {
 
             override fun onHomeItemClick(position: Int) {
                 val messageLists = smsDataList[position]
-                summaryViewModel.messageText(messageLists.message)
+                graphViewModel.messageTextAmount(messageLists.message)
+                graphViewModel.messageTime(messageLists.time)
+                graphViewModel.messageDate(messageLists.date)
+
+                summaryViewModel.messageTextAmount(messageLists.message)
                 summaryViewModel.messageTime(messageLists.time)
                 summaryViewModel.messageDate(messageLists.date)
+
+                messagesViewModel.messageData(messageLists)
                 Log.d("HomeClick", "Clicked and on position $position")
             }
         })

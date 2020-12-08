@@ -10,7 +10,7 @@ class HomeSummaryViewModel : ViewModel() {
     val time = MutableLiveData<String>()
     val date = MutableLiveData<String>()
 
-    fun messageText(input: String){
+    fun messageTextAmount(input: String){
         message.value = input
     }
 

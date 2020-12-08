@@ -1,10 +1,12 @@
 package com.affinityapps.txtr.ui.messages
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.affinityapps.txtr.databinding.FragmentMessagesBinding
@@ -25,18 +27,21 @@ class MessagesFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMessagesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val messagesList: MutableList<Messages> = ArrayList()
-        messagesList.add(Messages("asobjdgksjd", "aijdbfhijadbsjf", "lskdfngldskfng"))
-        messagesList.add(Messages("aodasdf", "aijdbfhijadbsjf", "kajbfjkdsf"))
-        messagesList.add(Messages("aodjfdaas", "aijdbfhijadbsjf", "kajbfjkdsf"))
+
+        val model = ViewModelProvider(requireActivity()).get(HomeMessagesViewModel::class.java)
+        model.message.observe(viewLifecycleOwner, {
+
+            messagesList.add(Messages(it.message, it.time, it.date))
+        })
 
         viewManager = LinearLayoutManager(activity)
         messagesAdapter = MessagesAdapter(messagesList)

@@ -6,14 +6,19 @@ import com.affinityapps.txtr.ui.home.Messages
 
 class HomeGraphViewModel : ViewModel() {
 
-    private val message = MutableLiveData<Messages>()
-    private val date = MutableLiveData<Messages>()
+    val message = MutableLiveData<String>()
+    val time = MutableLiveData<String>()
+    val date = MutableLiveData<String>()
 
-    fun messageBody(input: Messages){
+    fun messageTextAmount(input: String){
         message.value = input
     }
 
-    fun messageDate(input: Messages){
+    fun messageTime(input: String){
+        time.value = input
+    }
+
+    fun messageDate(input: String){
         date.value = input
     }
 }

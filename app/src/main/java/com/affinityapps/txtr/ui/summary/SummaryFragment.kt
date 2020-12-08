@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.affinityapps.txtr.databinding.FragmentSummaryBinding
-import kotlinx.android.synthetic.main.fragment_summary.*
-import java.util.Observer
+
 
 class SummaryFragment() : Fragment() {
 
@@ -29,21 +28,16 @@ class SummaryFragment() : Fragment() {
 
         val model = ViewModelProvider(requireActivity()).get(HomeSummaryViewModel::class.java)
         model.message.observe(viewLifecycleOwner, {
-            binding.summaryText.text = it
+    //        binding.summaryText.text = it
         })
 
         model.time.observe(viewLifecycleOwner, {
-            binding.summaryTime.text = it
+    //        binding.summaryTime.text = it
         })
 
         model.date.observe(viewLifecycleOwner, {
-            binding.summaryDate.text = it
+    //        binding.summaryDate.text = it
         })
-        //times texted today
-        //times texted in a week
-        //times texted in a month
-        //how many words used
-        //words used on average
     }
 
     override fun onDestroyView() {

@@ -1,3 +1,3 @@
 package com.affinityapps.txtr.ui.home
 
-data class Messages(var date: String, var time: String, var message: String)
+data class Messages(var message: String, var time: String, var date: String)

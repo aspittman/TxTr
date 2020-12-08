@@ -28,4 +28,9 @@
     <string name="nav_header_subtitle">App displays popular recipes with instructions</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <!--Summary Labels-->
+    <string name="day_summary_title">Amount Per Day</string>
+    <string name="week_summary_title">Amount Per Week</string>
+    <string name="month_summary_title">Amount Per Month</string>
 </resources>
