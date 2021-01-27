@@ -39,7 +39,6 @@ class MessagesFragment : Fragment() {
 
         val model = ViewModelProvider(requireActivity()).get(HomeMessagesViewModel::class.java)
         model.message.observe(viewLifecycleOwner, {
-
             messagesList.add(Messages(it.message, it.time, it.date))
         })
 

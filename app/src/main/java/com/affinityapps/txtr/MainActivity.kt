@@ -40,6 +40,19 @@ class MainActivity : AppCompatActivity() {
         enableNavigation()
     }
 
+    private fun inputPermission() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M
+        ) {
+            if (checkPermission(permissions)) {
+                Toast.makeText(this, "Permission is already provided", Toast.LENGTH_SHORT).show()
+            } else {
+                requestPermissions(permissions, PERMISSION_REQUEST)
+            }
+        } else {
+            Toast.makeText(this, "Permission is already provided", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun enableNavigation() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -54,6 +67,42 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST) {
+            var allSuccess = true
+            for (i in permissions.indices) {
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                    allSuccess = false
+                    val requestAgain = android.os.Build.VERSION.SDK_INT >=
+                            android.os.Build.VERSION_CODES.M &&
+                            shouldShowRequestPermissionRationale(permissions[i])
+                    if (requestAgain) {
+                        Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Request Permissions", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            if (allSuccess) {
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun checkPermission(permissionArray: Array<String>): Boolean {
+        var allSuccess = true
+        for (i in permissionArray.indices) {
+            if (checkCallingOrSelfPermission(permissionArray[i]) == PackageManager.PERMISSION_DENIED)
+                allSuccess = false
+        }
+        return allSuccess
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -87,19 +136,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun inputPermission() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M
-        ) {
-            if (checkPermission(permissions)) {
-                Toast.makeText(this, "Permission is already provided", Toast.LENGTH_SHORT).show()
-            } else {
-                requestPermissions(permissions, PERMISSION_REQUEST)
-            }
-        } else {
-            Toast.makeText(this, "Permission is already provided", Toast.LENGTH_SHORT).show()
-        }
-    }
-
     private fun refreshHomeFragment() {
         val frg: HomeFragment =
             supportFragmentManager.findFragmentByTag("HomeFragment") as HomeFragment
@@ -117,41 +153,5 @@ class MainActivity : AppCompatActivity() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
         recreate()
-    }
-
-    private fun checkPermission(permissionArray: Array<String>): Boolean {
-        var allSuccess = true
-        for (i in permissionArray.indices) {
-            if (checkCallingOrSelfPermission(permissionArray[i]) == PackageManager.PERMISSION_DENIED)
-                allSuccess = false
-        }
-        return allSuccess
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST) {
-            var allSuccess = true
-            for (i in permissions.indices) {
-                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                    allSuccess = false
-                    val requestAgain = android.os.Build.VERSION.SDK_INT >=
-                            android.os.Build.VERSION_CODES.M &&
-                            shouldShowRequestPermissionRationale(permissions[i])
-                    if (requestAgain) {
-                        Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this, "Request Permissions", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-            if (allSuccess) {
-                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 }

@@ -1,5 +1,6 @@
 package com.affinityapps.txtr.ui.home
 
+import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -46,6 +47,11 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        populateRecyclerViewContacts()
+        sendContactsSMSData()
+    }
+
+    private fun populateRecyclerViewContacts() {
         val contactsDataList: MutableList<Contacts> = ArrayList()
         val contacts = activity?.contentResolver?.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -67,6 +73,17 @@ class HomeFragment : Fragment() {
             contacts.close()
         }
 
+        viewManager = LinearLayoutManager(activity)
+        homeAdapter = HomeAdapter(contactsDataList)
+
+        recyclerView = binding.homeFragmentRecyclerview.apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            adapter = homeAdapter
+        }
+    }
+
+    private fun sendContactsSMSData() {
         val smsDataList: MutableList<Messages> = ArrayList()
         val messages = activity?.contentResolver?.query(
             Uri.parse("content://sms/"),
@@ -85,19 +102,10 @@ class HomeFragment : Fragment() {
 //                val trueTime = format.format(date)
 
 
-                val smsDataObject = Messages(time, message, "aslkdjnflksadn")
+                val smsDataObject = Messages(time, message, "Kristian is GAP")
                 smsDataList.add(smsDataObject)
             }
             messages.close()
-        }
-
-        viewManager = LinearLayoutManager(activity)
-        homeAdapter = HomeAdapter(contactsDataList)
-
-        recyclerView = binding.homeFragmentRecyclerview.apply {
-            setHasFixedSize(true)
-            layoutManager = viewManager
-            adapter = homeAdapter
         }
 
         graphViewModel = ViewModelProvider(requireActivity()).get(HomeGraphViewModel::class.java)
@@ -107,6 +115,7 @@ class HomeFragment : Fragment() {
 
             override fun onHomeItemClick(position: Int) {
                 val messageLists = smsDataList[position]
+
                 graphViewModel.messageTextAmount(messageLists.message)
                 graphViewModel.messageTime(messageLists.time)
                 graphViewModel.messageDate(messageLists.date)
@@ -117,6 +126,7 @@ class HomeFragment : Fragment() {
 
                 messagesViewModel.messageData(messageLists)
                 Log.d("HomeClick", "Clicked and on position $position")
+                Log.i("ListTester", "Arraylist data is $messageLists")
             }
         })
     }
