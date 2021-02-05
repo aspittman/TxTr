@@ -1,14 +1,18 @@
 package com.affinityapps.txtr.ui.home
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,8 +21,6 @@ import com.affinityapps.txtr.databinding.FragmentHomeBinding
 import com.affinityapps.txtr.ui.graphs.HomeGraphViewModel
 import com.affinityapps.txtr.ui.messages.HomeMessagesViewModel
 import com.affinityapps.txtr.ui.summary.HomeSummaryViewModel
-import kotlin.collections.ArrayList
-
 
 class HomeFragment : Fragment() {
 
@@ -42,10 +44,69 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        contactDataPermissionRationale()
+        smsDataPermissionRationale()
+    }
+
+    private fun contactDataPermissionRationale() {
+        val requestPermissionLauncher =
+            activity?.registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    initiateContactsList()
+                } else {
+                    Toast.makeText(activity, "Contacts is now not going to work", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+        when {
+            checkSelfPermission(requireActivity(), Manifest.permission.READ_CONTACTS) ==
+                    PackageManager.PERMISSION_GRANTED -> {
+                initiateContactsList()
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
+                Toast.makeText(activity, "You need this contact permission", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            else -> {
+                requestPermissionLauncher?.launch(Manifest.permission.READ_CONTACTS)
+            }
+        }
+    }
+
+    private fun smsDataPermissionRationale() {
+        val requestPermissionLauncher =
+            activity?.registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    initiateSMSDataDisplay()
+                } else {
+                    Toast.makeText(activity, "SMS is now not going to work", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+        when {
+            checkSelfPermission(requireActivity(), Manifest.permission.READ_SMS) ==
+                    PackageManager.PERMISSION_GRANTED -> {
+                initiateSMSDataDisplay()
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS) -> {
+                Toast.makeText(activity, "You need this SMS permission", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                requestPermissionLauncher?.launch(Manifest.permission.READ_SMS)
+            }
+        }
+    }
+
+    private fun initiateContactsList() {
         val contactsDataList: MutableList<Contacts> = ArrayList()
         val contacts = activity?.contentResolver?.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -67,6 +128,18 @@ class HomeFragment : Fragment() {
             contacts.close()
         }
 
+        viewManager = LinearLayoutManager(activity)
+        homeAdapter = HomeAdapter(contactsDataList)
+
+        recyclerView = binding.homeFragmentRecyclerview.apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            adapter = homeAdapter
+        }
+    }
+
+
+    private fun initiateSMSDataDisplay() {
         val smsDataList: MutableList<Messages> = ArrayList()
         val messages = activity?.contentResolver?.query(
             Uri.parse("content://sms/"),
@@ -91,18 +164,11 @@ class HomeFragment : Fragment() {
             messages.close()
         }
 
-        viewManager = LinearLayoutManager(activity)
-        homeAdapter = HomeAdapter(contactsDataList)
-
-        recyclerView = binding.homeFragmentRecyclerview.apply {
-            setHasFixedSize(true)
-            layoutManager = viewManager
-            adapter = homeAdapter
-        }
-
         graphViewModel = ViewModelProvider(requireActivity()).get(HomeGraphViewModel::class.java)
-        summaryViewModel = ViewModelProvider(requireActivity()).get(HomeSummaryViewModel::class.java)
-        messagesViewModel = ViewModelProvider(requireActivity()).get(HomeMessagesViewModel::class.java)
+        summaryViewModel =
+            ViewModelProvider(requireActivity()).get(HomeSummaryViewModel::class.java)
+        messagesViewModel =
+            ViewModelProvider(requireActivity()).get(HomeMessagesViewModel::class.java)
         homeAdapter.setOnHomeItemClickListener(object : HomeAdapter.OnHomeItemClickListener {
 
             override fun onHomeItemClick(position: Int) {
@@ -120,6 +186,7 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
